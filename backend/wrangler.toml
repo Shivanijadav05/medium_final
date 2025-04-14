@@ -1,0 +1,7 @@
+name="backend"
+compatibility_date="2025-01-29"
+main="src/index.ts"
+
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMDg5ZmQxMDMtOWJlZS00YWU4LTlmMTMtNmRmYmU2NWQxNzRkIiwidGVuYW50X2lkIjoiMWY5ZTdiNTk4ZDNlNWRjMTkwNjQzMzU1YjJiNGRhYjYwYjZmNDEyMmNjZGIzZGQwYmJiNzdjMzNiNjBmNDIxMCIsImludGVybmFsX3NlY3JldCI6ImY4YTUzYjBkLWUzYjQtNDEyYi04MzBmLTMyMzVkZWNmYTRiNCJ9.DwEkJ_wM0EZ2-6a9XkLK8P_yr9-rWPkuU1IxF8hxOOw" 
+JWT_SECRET="shivani"
