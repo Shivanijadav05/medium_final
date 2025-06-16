@@ -26,16 +26,16 @@ userRouter.post('/signup',async (c)=>{
     }
 
 
-    // const validationResult = signupInput.safeParse(body);
-    // console.log("Validation Result:", validationResult); // 🔍 Debugging
+    const validationResult = signupInput.safeParse(body);
+    console.log("Validation Result:", validationResult); // 🔍 Debugging
 
-    // if (!validationResult.success) {
-    //     c.status(411);
-    //     return c.json({ 
-    //         message: "Inputs are not correct",
-    //         error: validationResult.error.errors  // 🔍 Detailed error response
-    //     });
-    // }
+    if (!validationResult.success) {
+        c.status(411);
+        return c.json({ 
+            message: "Inputs are not correct",
+            error: validationResult.error.errors  // 🔍 Detailed error response
+        });
+    }
 
     const prisma=new PrismaClient({
         datasourceUrl:c.env.DATABASE_URL,
@@ -103,3 +103,70 @@ catch(e)
 }
 
 })
+
+
+
+// userRouter.post('/userinfo',async(c)=>{
+//   const body=await c.req.json();
+//     const {success}=signinInput.safeParse(body);
+//     if(!success)
+//     {
+//       c.status(411);
+//       return c.json({
+//         message:"inputs are not correct"
+//       })
+//     }
+//   const prisma=new PrismaClient({
+//     datasourceUrl:c.env.DATABASE_URL,
+//   }).$extends(withAccelerate());
+  
+//   try{
+//   const user=await prisma.user.findUnique({
+//     where:{
+//       email:body.username
+//     }
+//   });
+//   return c.json(user?.name);
+//   console.log(user)
+//   }
+//   catch(e)
+//   {
+//      console.log(e);
+//     c.status(400);
+//     return c.json({error:"user not found"})
+
+//   }
+// })
+
+
+
+
+userRouter.post("/userinfo",async (c)=>{
+   try{const authHeader=c.req.header("authorization") || ""
+   const decoded=await verify(authHeader,c.env.JWT_SECRET) as{id:string}
+    const prisma=new PrismaClient({
+    datasourceUrl:c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+   
+   const user=await prisma.user.findUnique({
+    where:{id:Number(decoded.id)},
+    select:{
+      id:true,
+      name:true,email:true
+    }
+   })
+   if(!user)
+   {
+    return c.json("user not found");
+   }
+   return c.json({user});
+}
+catch(error)
+{
+   console.error(error);
+    return c.json({ error: "Invalid or expired token" });
+}
+
+})
+
+

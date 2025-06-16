@@ -52,7 +52,7 @@ export const useBlogs = () => {
         try {
             console.log("useblog started")
             const token = localStorage.getItem("token")
-            console.log(token)
+            // console.log(token)
             axios.get(`${BACKEND_URL}/api/v1/blog/bulk`,
                 {
                     headers: {

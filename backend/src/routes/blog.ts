@@ -90,6 +90,7 @@ blogRouter.post('/',async (c)=>{
               })
             }
         const userId=c.get("userId");
+        console.log(userId);
         const prisma=new PrismaClient({
             datasourceUrl:c.env.DATABASE_URL,
         }).$extends(withAccelerate())
@@ -105,8 +106,10 @@ blogRouter.post('/',async (c)=>{
                 }
         })
         return c.json({
-            id:post.id
+            id:post.id,
+             message:"successfully updating a blog"
         });
+        
     }
     catch(e)
     {
@@ -119,6 +122,38 @@ blogRouter.post('/',async (c)=>{
 
 
   })
+
+
+  //get profile
+  blogRouter.get('/profile',async(c)=>{
+    const userId=c.get("userId");
+    const prisma=new PrismaClient({
+            datasourceUrl:c.env.DATABASE_URL,
+        }).$extends(withAccelerate())
+    try
+    {
+        const posts=await prisma.post.findMany({
+            where:{authorId:userId},
+            include:{author:true},
+
+        });
+        return c.json({
+            posts
+        })
+    }
+    catch(e)
+    {
+        c.status(400);
+        console.log(e);
+        return c.json({
+            message:"error while displaying"
+        })
+    }
+  })
+
+
+
+
   //collect all blog
   blogRouter.get('/bulk',async (c)=>{
     const prisma=new PrismaClient({
@@ -149,8 +184,12 @@ blogRouter.post('/',async (c)=>{
     }
   })
   
+
+
+
+
   //read a blog
-  blogRouter.get('/:id',async (c)=>{
+  blogRouter.get('/:id{[0-9]+}',async (c)=>{
    try 
    {
         const id= c.req.param("id");
