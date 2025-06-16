@@ -4,7 +4,7 @@ import { useUser } from "../hooks/index2user"
 
 
 export const Appbar = () => {
-    const user=useUser("a");
+    const user=useUser();
   
     console.log(user);
     const navigate=useNavigate();
