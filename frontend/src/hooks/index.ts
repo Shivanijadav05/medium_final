@@ -51,7 +51,7 @@ export const useBlogs = () => {
     useEffect(() => {
         try {
             console.log("useblog started")
-            const token = localStorage.getItem("token")
+           
             // console.log(token)
             axios.get(`${BACKEND_URL}/api/v1/blog/bulk`,
                 {

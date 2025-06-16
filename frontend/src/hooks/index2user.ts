@@ -3,12 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 
-interface User {
-  name: string;
-  email: string;
-}
 
-export const useUser = (a : string) => {
+
+export const useUser = () => {
   const [name, setname] = useState("");
   useEffect(() => {
     const token = localStorage.getItem("token");

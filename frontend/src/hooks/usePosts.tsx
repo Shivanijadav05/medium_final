@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import  axios  from 'axios';
 
 interface Author {
@@ -25,6 +25,8 @@ export const  usePosts=()=>{
                 const token=localStorage.getItem("token");
                 if(!token)
                 {
+                    console.log(loading);
+                    console.log(error);
                     setLoading(false);
                     setError("no token found.Please log in");
                     return;
